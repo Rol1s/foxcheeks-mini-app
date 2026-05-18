@@ -2,6 +2,8 @@
 
 Миниапка для поэтапного сбора заявки на татуировку.
 
+Демо: https://Rol1s.github.io/foxcheeks-mini-app/
+
 ## Что внутри
 
 - Dark premium оформление под tattoo-направление.
@@ -44,7 +46,7 @@ tattoo_telegram_bot/.env
 ```
 
 ```env
-MINI_APP_URL=https://your-domain.example
+MINI_APP_URL=https://Rol1s.github.io/foxcheeks-mini-app/
 ```
 
 После этого перезапустите бота. В меню появится кнопка `Открыть миниапку`.
