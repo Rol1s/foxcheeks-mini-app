@@ -122,9 +122,16 @@ function renderSummary() {
 }
 
 function updateStep() {
+  const previousStep = document.querySelector(".form-step.active");
   document.querySelectorAll(".form-step").forEach((step, index) => {
     step.classList.toggle("active", index === state.step);
   });
+  const activeStep = document.querySelector(".form-step.active");
+  if (previousStep && activeStep && previousStep !== activeStep) {
+    activeStep.classList.remove("step-pulse");
+    void activeStep.offsetWidth;
+    activeStep.classList.add("step-pulse");
+  }
   stepNow.textContent = String(state.step + 1);
   stepTitle.textContent = steps[state.step];
   progressBar.style.width = `${((state.step + 1) / steps.length) * 100}%`;
@@ -270,6 +277,7 @@ sendButton.addEventListener("click", () => {
       <button type="button" class="primary-button" id="againButton">Новая заявка</button>
     </div>
   `;
+  summaryPanel.classList.add("active");
   summaryPanel.querySelector("[data-view-link]").addEventListener("click", () => switchView("requests"));
   summaryPanel.querySelector("#againButton").addEventListener("click", () => {
     form.reset();
