@@ -2,3 +2,4 @@ server.pid
 server.out.log
 server.err.log
 qa/
+.DS_Store
