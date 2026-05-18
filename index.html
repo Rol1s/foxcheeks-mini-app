@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Tattoo Atelier Mini App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero-panel">
+        <div class="ornament ornament-top"></div>
+        <div class="topline">
+          <span>foxcheeks</span>
+          <span class="studio-mark">tattoo</span>
+        </div>
+        <h1 id="greeting">Привет, гость</h1>
+        <p>
+          Соберём идею, место, размер, стиль, референсы и удобный слот в одну
+          аккуратную заявку для мастера.
+        </p>
+      </section>
+
+      <nav class="tabs" aria-label="Разделы миниапки">
+        <button class="tab active" type="button" data-view="form">Заявка</button>
+        <button class="tab" type="button" data-view="requests">Мои заявки</button>
+        <button class="tab" type="button" data-view="faq">FAQ</button>
+        <button class="tab" type="button" data-view="help">Помощь</button>
+      </nav>
+
+      <section class="view active" id="formView">
+        <div class="progress-card">
+          <div>
+            <span class="caption">Шаг <span id="stepNow">1</span> из 7</span>
+            <strong id="stepTitle">Услуга</strong>
+          </div>
+          <div class="progress-track">
+            <span id="progressBar"></span>
+          </div>
+        </div>
+
+        <form id="requestForm" class="request-form">
+          <section class="form-step active" data-step="0">
+            <h2>На какую услугу записываемся?</h2>
+            <div class="choice-grid">
+              <label class="choice-card active">
+                <input type="radio" name="service" value="Татуировка" checked />
+                <span>Татуировка</span>
+                <small>Новая работа с нуля</small>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="service" value="Перекрытие" />
+                <span>Перекрытие</span>
+                <small>Закрыть или обновить старую тату</small>
+              </label>
+            </div>
+          </section>
+
+          <section class="form-step" data-step="1">
+            <h2>Опишите идею</h2>
+            <label class="field">
+              <span>Что хотите набить?</span>
+              <textarea name="idea" rows="6" placeholder="Например: ветка пиона, нежно, без плотной заливки"></textarea>
+            </label>
+          </section>
+
+          <section class="form-step" data-step="2">
+            <h2>Место и размер</h2>
+            <label class="field">
+              <span>Где будет татуировка и какого размера?</span>
+              <textarea name="placementSize" rows="5" placeholder="Например: предплечье, 10-12 см"></textarea>
+            </label>
+          </section>
+
+          <section class="form-step" data-step="3">
+            <h2>Стиль и цвет</h2>
+            <label class="field">
+              <span>Если знаете стиль, напишите его. Если нет — опишите настроение.</span>
+              <textarea name="styleColor" rows="5" placeholder="Например: fine line, чёрно-белая, аккуратная и воздушная"></textarea>
+            </label>
+            <div class="segmented">
+              <button type="button" data-color="чёрно-белая" class="active">Ч/б</button>
+              <button type="button" data-color="цветная">Цветная</button>
+              <button type="button" data-color="не знаю">Не знаю</button>
+            </div>
+          </section>
+
+          <section class="form-step" data-step="4">
+            <h2>Референсы</h2>
+            <label class="upload-zone" for="references">
+              <input id="references" name="references" type="file" accept="image/*" multiple />
+              <strong>Прикрепить фото</strong>
+              <span>Можно добавить несколько изображений или оставить поле пустым.</span>
+            </label>
+            <div id="fileList" class="file-list">Референсы пока не добавлены</div>
+          </section>
+
+          <section class="form-step" data-step="5">
+            <h2>Комментарий мастеру</h2>
+            <label class="field">
+              <span>Что важно учесть?</span>
+              <textarea name="comment" rows="5" placeholder="Что нравится, чего не хочется, есть ли ограничения"></textarea>
+            </label>
+          </section>
+
+          <section class="form-step" data-step="6">
+            <h2>Дата и время</h2>
+            <div class="slot-picker">
+              <div>
+                <span class="slot-label">Выберите удобный день</span>
+                <div class="date-grid" id="dateGrid"></div>
+              </div>
+              <div>
+                <span class="slot-label">Выберите время</span>
+                <div class="time-grid" id="timeGrid"></div>
+              </div>
+            </div>
+            <label class="field slot-note">
+              <span>Комментарий по времени, если нужно</span>
+              <textarea name="desiredTimeNote" rows="3" placeholder="Например: могу немного раньше или позже"></textarea>
+            </label>
+          </section>
+        </form>
+
+        <section class="summary-panel" id="summaryPanel" aria-live="polite">
+          <div class="summary-header">
+            <span>Проверка заявки</span>
+            <strong>Перед отправкой</strong>
+          </div>
+          <div id="summaryContent" class="summary-content"></div>
+          <div class="summary-actions">
+            <button type="button" class="secondary-button" id="editButton">Изменить</button>
+            <button type="button" class="primary-button" id="sendButton">Отправить</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="requestsView">
+        <div class="section-head">
+          <h2>Мои заявки</h2>
+          <p>Здесь будут заявки, отправленные из миниапки.</p>
+        </div>
+        <div id="requestsList" class="requests-list"></div>
+      </section>
+
+      <section class="view" id="faqView">
+        <div class="section-head">
+          <h2>FAQ</h2>
+          <p>Короткие ответы перед записью.</p>
+        </div>
+        <div class="accordion">
+          <details open>
+            <summary>Нужны ли референсы?</summary>
+            <p>Желательно, но не обязательно. Если их нет, просто подробно опишите идею.</p>
+          </details>
+          <details>
+            <summary>Можно ли сделать перекрытие?</summary>
+            <p>Да. Выберите “Перекрытие” и приложите фото текущей татуировки.</p>
+          </details>
+          <details>
+            <summary>Когда мастер ответит?</summary>
+            <p>После просмотра идеи, места, размера и сложности работы.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="view" id="helpView">
+        <div class="section-head">
+          <h2>Помощь</h2>
+          <p>Если сомневаетесь, пишите простыми словами. Мастер уточнит детали после заявки.</p>
+        </div>
+        <button class="wide-button" type="button" data-view-link="form">Оставить новую заявку</button>
+      </section>
+
+      <footer class="bottom-bar">
+        <button type="button" class="secondary-button" id="backButton">Назад</button>
+        <button type="button" class="primary-button" id="nextButton">Продолжить</button>
+      </footer>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
