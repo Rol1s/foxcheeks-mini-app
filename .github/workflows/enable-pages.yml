@@ -1,0 +1,37 @@
+name: Enable GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+
+jobs:
+  enable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable Pages from gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          api="https://api.github.com/repos/${GITHUB_REPOSITORY}/pages"
+          body='{"source":{"branch":"gh-pages","path":"/"}}'
+          status=$(curl -sS -o response.json -w "%{http_code}" \
+            -X POST \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "${api}" \
+            -d "${body}")
+
+          if [ "${status}" = "201" ] || [ "${status}" = "409" ]; then
+            cat response.json
+            exit 0
+          fi
+
+          cat response.json
+          exit 1
