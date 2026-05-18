@@ -59,6 +59,15 @@ const dateOptions = [
 
 const timeOptions = ["11:00", "13:00", "15:00", "17:00", "18:30", "19:30", "Любое", "Напишу"];
 
+function escapeHTML(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function renderSlots() {
   dateGrid.innerHTML = dateOptions
     .map(
@@ -109,13 +118,13 @@ function renderSummary() {
   const request = collectFormData();
   summaryContent.innerHTML = `
     <dl>
-      <div><dt>Услуга</dt><dd>${request.service}</dd></div>
-      <div><dt>Идея</dt><dd>${request.idea}</dd></div>
-      <div><dt>Место и размер</dt><dd>${request.placementSize}</dd></div>
-      <div><dt>Стиль и цвет</dt><dd>${request.styleColor}</dd></div>
-      <div><dt>Референсы</dt><dd>${request.references}</dd></div>
-      <div><dt>Комментарий</dt><dd>${request.comment}</dd></div>
-      <div><dt>Дата и время</dt><dd>${request.desiredTime}</dd></div>
+      <div><dt>Услуга</dt><dd>${escapeHTML(request.service)}</dd></div>
+      <div><dt>Идея</dt><dd>${escapeHTML(request.idea)}</dd></div>
+      <div><dt>Место и размер</dt><dd>${escapeHTML(request.placementSize)}</dd></div>
+      <div><dt>Стиль и цвет</dt><dd>${escapeHTML(request.styleColor)}</dd></div>
+      <div><dt>Референсы</dt><dd>${escapeHTML(request.references)}</dd></div>
+      <div><dt>Комментарий</dt><dd>${escapeHTML(request.comment)}</dd></div>
+      <div><dt>Дата и время</dt><dd>${escapeHTML(request.desiredTime)}</dd></div>
     </dl>
   `;
   return request;
@@ -161,8 +170,8 @@ function renderRequests() {
     .map(
       (request) => `
         <article class="request-card">
-          <h3>${request.service} · ${request.createdAt}</h3>
-          <p>${request.idea}</p>
+          <h3>${escapeHTML(request.service)} · ${escapeHTML(request.createdAt)}</h3>
+          <p>${escapeHTML(request.idea)}</p>
           <div class="request-card-actions">
             <button class="secondary-button" type="button" data-open-request="${request.id}">Посмотреть</button>
             <button class="secondary-button" type="button" data-delete-request="${request.id}">Удалить</button>
