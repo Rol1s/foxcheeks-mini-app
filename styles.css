@@ -220,6 +220,12 @@ h1 {
   line-height: 1.55;
 }
 
+.hero-panel h1,
+.hero-panel p {
+  position: relative;
+  z-index: 1;
+}
+
 .tabs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -334,6 +340,10 @@ h1 {
   gap: 12px;
 }
 
+.choice-grid.compact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .choice-card {
   min-height: 104px;
   padding: 18px;
@@ -380,6 +390,15 @@ h1 {
 .choice-card span {
   font-size: 20px;
   font-weight: 700;
+}
+
+.choice-grid.compact .choice-card {
+  min-height: 82px;
+  align-content: center;
+}
+
+.choice-grid.compact .choice-card span {
+  font-size: 16px;
 }
 
 .choice-card small,
