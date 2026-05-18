@@ -45,7 +45,7 @@
       <section class="view active" id="formView">
         <div class="progress-card">
           <div>
-            <span class="caption">Шаг <span id="stepNow">1</span> из 7</span>
+            <span class="caption">Шаг <span id="stepNow">1</span> из <span id="stepTotal">7</span></span>
             <strong id="stepTitle">Услуга</strong>
           </div>
           <div class="progress-track">
@@ -54,7 +54,7 @@
         </div>
 
         <form id="requestForm" class="request-form">
-          <section class="form-step active" data-step="0">
+          <section class="form-step active" data-flow="both" data-step="0">
             <h2>На какую услугу записываемся?</h2>
             <div class="choice-grid">
               <label class="choice-card active">
@@ -70,7 +70,7 @@
             </div>
           </section>
 
-          <section class="form-step" data-step="1">
+          <section class="form-step" data-flow="tattoo" data-step="1">
             <h2>Опишите идею</h2>
             <label class="field">
               <span>Что хотите набить?</span>
@@ -78,7 +78,7 @@
             </label>
           </section>
 
-          <section class="form-step" data-step="2">
+          <section class="form-step" data-flow="tattoo" data-step="2">
             <h2>Место и размер</h2>
             <label class="field">
               <span>Где будет татуировка и какого размера?</span>
@@ -86,7 +86,7 @@
             </label>
           </section>
 
-          <section class="form-step" data-step="3">
+          <section class="form-step" data-flow="tattoo" data-step="3">
             <h2>Стиль и цвет</h2>
             <label class="field">
               <span>Если знаете стиль, напишите его. Если нет — опишите настроение.</span>
@@ -99,7 +99,7 @@
             </div>
           </section>
 
-          <section class="form-step" data-step="4">
+          <section class="form-step" data-flow="tattoo" data-step="4">
             <h2>Референсы</h2>
             <label class="upload-zone" for="references">
               <input id="references" name="references" type="file" accept="image/*" multiple />
@@ -109,7 +109,7 @@
             <div id="fileList" class="file-list">Референсы пока не добавлены</div>
           </section>
 
-          <section class="form-step" data-step="5">
+          <section class="form-step" data-flow="tattoo" data-step="5">
             <h2>Комментарий мастеру</h2>
             <label class="field">
               <span>Что важно учесть?</span>
@@ -117,7 +117,7 @@
             </label>
           </section>
 
-          <section class="form-step" data-step="6">
+          <section class="form-step" data-flow="tattoo" data-step="6">
             <h2>Дата и время</h2>
             <div class="slot-picker">
               <div>
@@ -132,6 +132,114 @@
             <label class="field slot-note">
               <span>Комментарий по времени, если нужно</span>
               <textarea name="desiredTimeNote" rows="3" placeholder="Например: могу немного раньше или позже"></textarea>
+            </label>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="1">
+            <h2>Фото текущей татуировки</h2>
+            <label class="upload-zone" for="coverPhoto">
+              <input id="coverPhoto" name="coverPhoto" type="file" accept="image/*" multiple />
+              <strong>Прикрепить фото старой тату</strong>
+              <span>Лучше добавить общий вид, фото ближе и фото при обычном освещении.</span>
+            </label>
+            <div id="coverPhotoList" class="file-list">Фото текущей тату пока не добавлены</div>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="2">
+            <h2>Место и размер</h2>
+            <label class="field">
+              <span>Где находится старая татуировка и какой у неё размер?</span>
+              <textarea name="coverPlacementSize" rows="5" placeholder="Например: плечо, около 8 см"></textarea>
+            </label>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="3">
+            <h2>Возраст татуировки</h2>
+            <div class="choice-grid compact">
+              <label class="choice-card"><input type="radio" name="coverAge" value="меньше 6 месяцев" /><span>До 6 месяцев</span></label>
+              <label class="choice-card"><input type="radio" name="coverAge" value="6–12 месяцев" /><span>6–12 месяцев</span></label>
+              <label class="choice-card active"><input type="radio" name="coverAge" value="1–3 года" checked /><span>1–3 года</span></label>
+              <label class="choice-card"><input type="radio" name="coverAge" value="больше 3 лет" /><span>Больше 3 лет</span></label>
+            </div>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="4">
+            <h2>Цвет и плотность</h2>
+            <div class="choice-grid compact">
+              <label class="choice-card active"><input type="radio" name="coverDensity" value="чёрная / тёмная" checked /><span>Тёмная</span></label>
+              <label class="choice-card"><input type="radio" name="coverDensity" value="цветная" /><span>Цветная</span></label>
+              <label class="choice-card"><input type="radio" name="coverDensity" value="светлая / выцветшая" /><span>Выцветшая</span></label>
+              <label class="choice-card"><input type="radio" name="coverDensity" value="плотная заливка" /><span>Плотная</span></label>
+            </div>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="5">
+            <h2>Что не устраивает</h2>
+            <label class="field">
+              <span>Что хочется закрыть или изменить в старой тату?</span>
+              <textarea name="coverProblem" rows="5" placeholder="Например: не нравится форма, слишком тёмная, потеряла смысл"></textarea>
+            </label>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="6">
+            <h2>Новая идея</h2>
+            <label class="field">
+              <span>Что хотите получить после перекрытия?</span>
+              <textarea name="coverResult" rows="5" placeholder="Например: ботаника, лиса, графика, более мягкая композиция"></textarea>
+            </label>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="7">
+            <h2>Референсы новой идеи</h2>
+            <label class="upload-zone" for="coverReferences">
+              <input id="coverReferences" name="coverReferences" type="file" accept="image/*" multiple />
+              <strong>Прикрепить референсы</strong>
+              <span>Можно добавить примеры стиля, композиции или настроения.</span>
+            </label>
+            <div id="coverReferenceList" class="file-list">Референсы пока не добавлены</div>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="8">
+            <h2>Готовность адаптировать</h2>
+            <div class="choice-grid compact">
+              <label class="choice-card active"><input type="radio" name="coverAdaptation" value="готов(а) адаптировать идею" checked /><span>Можно адаптировать</span></label>
+              <label class="choice-card"><input type="radio" name="coverAdaptation" value="хочу близко к референсу" /><span>Близко к референсу</span></label>
+              <label class="choice-card"><input type="radio" name="coverAdaptation" value="хочу консультацию" /><span>Нужна консультация</span></label>
+            </div>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="9">
+            <h2>Лазер или осветление</h2>
+            <div class="choice-grid compact">
+              <label class="choice-card"><input type="radio" name="coverLaser" value="готов(а) рассмотреть лазер" /><span>Рассмотрю лазер</span></label>
+              <label class="choice-card"><input type="radio" name="coverLaser" value="не хочу лазер" /><span>Не хочу лазер</span></label>
+              <label class="choice-card active"><input type="radio" name="coverLaser" value="хочу мнение мастера" checked /><span>Хочу мнение мастера</span></label>
+            </div>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="10">
+            <h2>Комментарий мастеру</h2>
+            <label class="field">
+              <span>Что ещё важно учесть?</span>
+              <textarea name="coverComment" rows="5" placeholder="Ограничения, пожелания, чего точно не хочется"></textarea>
+            </label>
+          </section>
+
+          <section class="form-step" data-flow="cover" data-step="11">
+            <h2>Дата и время</h2>
+            <div class="slot-picker">
+              <div>
+                <span class="slot-label">Выберите удобный день</span>
+                <div class="date-grid" id="coverDateGrid"></div>
+              </div>
+              <div>
+                <span class="slot-label">Выберите время</span>
+                <div class="time-grid" id="coverTimeGrid"></div>
+              </div>
+            </div>
+            <label class="field slot-note">
+              <span>Комментарий по времени, если нужно</span>
+              <textarea name="coverDesiredTimeNote" rows="3" placeholder="Например: лучше вечер или выходной"></textarea>
             </label>
           </section>
         </form>
